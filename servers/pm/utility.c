@@ -158,7 +158,7 @@ message *m_ptr;
  *				get_proct				*
  *============================================================================*/
 
-void get_proct(endpoint_t _who, int _syscallnr, message m)
+int do_get_proct()
 {
 	printf("YAY! Syscall!");
 }
