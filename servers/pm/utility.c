@@ -153,3 +153,12 @@ message *m_ptr;
 
   rmp->mp_flags |= VFS_CALL;
 }
+
+/*============================================================================*
+ *				get_proct				*
+ *============================================================================*/
+
+void get_proct(endpoint_t _who, int _syscallnr, message m)
+{
+	printf("YAY! Syscall!");
+}

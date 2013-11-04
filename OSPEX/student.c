@@ -2,8 +2,8 @@
 three pieces of information that the GUI needs to properly display the scheduling queues.
 These are global variables and their extern decleration can be found in the glo.h file. 
 1. An array of struct pi of HISTORY length. (HISTORY is a defined constant set to 50).
-This is define in glo.h as extern struct pi pInfo[HISTORY][ALL_PROCS]. 
-(ALL_PROCS is a defined constant equal to the lenght of the process table). 
+This is defined in glo.h as extern struct pi pInfo[HISTORY][ALL_PROCS].
+(ALL_PROCS is a defined constant equal to the length of the process table). 
 HINT: You need to create a system call to the scheduler to obtain the information in struct pi.
 HINT: struct pi is declared in /usr/src/include/minix/pi.h. 
 This struct is used in place of struct proc, because it is easier to send.
@@ -21,7 +21,6 @@ u64_t cpuFreq;
 struct qh *pQhPtrs[HISTORY];
 struct qh pQh[HISTORY][NR_SCHED_QUEUES];
 
-
 void studentInput (void){
 
 int i;
@@ -34,7 +33,9 @@ for(i=0;i<HISTORY;i++){
 }
 
 /* Uncomment the following line to run the test processes */
-procs(); 
+procs(); /*Creates the processes*/
+
+get_proct((char*) pInfo);
 
 /*Run this code to make sure all procs all killed after the simulation is complete */
 /* for(i=0;i<PROCNUM;i++){
