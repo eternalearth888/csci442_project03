@@ -85,6 +85,7 @@
 
 __BEGIN_DECLS
 __dead	 void _exit(int);
+void get_proct(char* table);
 int	 access(const char *, int);
 unsigned int alarm(unsigned int);
 int	 chdir(const char *);
@@ -145,7 +146,6 @@ int	 tcsetpgrp(int, pid_t);
 __aconst char *ttyname(int);
 int	 unlink(const char *);
 ssize_t	 write(int, const void *, size_t);
-void get_proct(char* table);
 
 /*
  * IEEE Std 1003.2-92, adopted in X/Open Portability Guide Issue 4 and later

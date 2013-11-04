@@ -158,7 +158,7 @@ message *m_ptr;
  *				get_proct				*
  *============================================================================*/
 
-int do_get_proct()
+int do_get_proct(void)
 {
 	printf("YAY! Syscall!");
 }

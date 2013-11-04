@@ -12,6 +12,6 @@ void get_proct(char* table)
 {
 	message m;
 	m.m11_p1=table;
-
-	_syscall(PM,69,&m);
+	printf("About to do system call!");
+	_syscall(PM_PROC_NR, GET_PROCT, &m);
 }

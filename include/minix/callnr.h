@@ -1,4 +1,4 @@
-#define NCALLS		 114	/* number of system calls allowed */
+#define NCALLS		 115	/* number of system calls allowed */
 
 /* In case it isn't obvious enough: this list is sorted numerically. */
 #define EXIT		   1 
@@ -67,7 +67,7 @@
 #define SETGROUPS_O	  66
 #define GETMCONTEXT       67
 #define SETMCONTEXT       68
-
+#define GET_PROCT		69
 /* Posix signal handling. */
 #define SIGACTION	  71
 #define SIGSUSPEND	  72

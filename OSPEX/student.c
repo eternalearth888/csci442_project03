@@ -25,6 +25,8 @@ void studentInput (void){
 
 int i;
 
+printf("Work, damnit!");
+
 /* Replace struct pi pInfo[i][] = NULL with process table information from the scheduler*/
 for(i=0;i<HISTORY;i++){
 	strcpy(pInfo[i][0].p_name,"NOPTABCOPY"); /*Signal to the GUI that there are no process tables */
@@ -35,7 +37,11 @@ for(i=0;i<HISTORY;i++){
 /* Uncomment the following line to run the test processes */
 procs(); /*Creates the processes*/
 
-get_proct((char*) pInfo);
+/*message m;
+m.m11_p1=(char*) pInfo;
+
+_syscall(PM_PROC_NR, GET_PROCT, &m);*/
+get_proct()
 
 /*Run this code to make sure all procs all killed after the simulation is complete */
 /* for(i=0;i<PROCNUM;i++){
