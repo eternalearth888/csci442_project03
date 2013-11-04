@@ -1,7 +1,11 @@
-**csci442 | fall 2013 | camp | project03**
+# **csci442 | fall 2013 | camp | project03 **
+## **TEAM**
 
-*TEAM*
-- Maria Deslis
-- Mykala Miller
-- Austin Thompson
-- Joseph Sirone
+- Maria Deslis @eternalearth888
+ * HOURS:
+- Mykala Miller @mymiller
+ * HOURS:
+- Austin Thompson @authompson
+ * HOURS:
+- Joseph Cirone @jcirone
+ * HOURS:
