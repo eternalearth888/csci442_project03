@@ -25,6 +25,9 @@ char *srcPtrQH;
 char *srcPtrCpu;
 struct pi *pInfoPtrs[HISTORY];	
 struct qh *pQhPtrs[HISTORY];
+message m_in_glo;
+int sample = 0;
+int snapshots;
 /*===========================================================================*
  *				main					     *
  *===========================================================================*/
@@ -98,7 +101,9 @@ int main(void)
 			}
 			break;
 		case SCHEDULING_STORE_PTAB:
-			printf("OUR TASK CALL!");
+			m_in_glo = m_in;
+			sample = 1;
+			snapshots = 0;
 			OSSendPtab();
 			break;
 		default:

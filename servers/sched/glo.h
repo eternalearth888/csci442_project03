@@ -11,3 +11,6 @@ extern struct pi pInfo[NR_TASKS+NR_PROCS];
 extern struct pi *pInfoPtrs[HISTORY];
 extern struct qh *pQhPtrs[HISTORY];
 extern int debug_trigger;
+extern message m_in_glo;
+extern int sample;
+extern int snapshots;

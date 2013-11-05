@@ -10,11 +10,11 @@
 #include "student.h"
 
 int main(int argc, const char* argv[]) {
+	struct pi pInfo[HISTORY][ALL_PROCS];
 	message m;
-	m.m11_p1=NULL; /*pInfo*/
-	//m.m11_i1=SELF;
-	printf("1\n");
+	// printf("%s\n", &pInfo );
+	m.m11_p1=(char*)&pInfo; /*pInfo*/
+	m.m11_i1=SELF;
 	_syscall(PM_PROC_NR, 69, &m);
-	printf("2\n");
 	return 0;
 }
