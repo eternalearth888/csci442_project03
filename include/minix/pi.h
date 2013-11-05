@@ -24,7 +24,7 @@ struct pi {
 	struct p_accounting p_times;
 	clock_t p_user_time;
 	clock_t p_sys_time;
-	u64_t p_cycles
+	u64_t p_cycles;
 	};
 
 #define NOPROC "NOPROC"

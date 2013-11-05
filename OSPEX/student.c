@@ -37,11 +37,9 @@ for(i=0;i<HISTORY;i++){
 /* Uncomment the following line to run the test processes */
 procs(); /*Creates the processes*/
 
-/*message m;
+message m;
 m.m11_p1=(char*) pInfo;
-
-_syscall(PM_PROC_NR, GET_PROCT, &m);*/
-get_proct()
+_syscall(PM_PROC_NR, GET_PROCT, &m);
 
 /*Run this code to make sure all procs all killed after the simulation is complete */
 /* for(i=0;i<PROCNUM;i++){

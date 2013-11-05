@@ -160,5 +160,6 @@ message *m_ptr;
 
 int do_get_proct(void)
 {
-	printf("YAY! Syscall!");
+	printf("System Call!\n");
+	_taskcall(SCHED_PROC_NR, SCHEDULING_STORE_PTAB, &m_in);
 }

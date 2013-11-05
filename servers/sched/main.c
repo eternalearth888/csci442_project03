@@ -97,6 +97,10 @@ int main(void)
 				result = EPERM;
 			}
 			break;
+		case SCHEDULING_STORE_PTAB:
+			printf("OUR TASK CALL!");
+			OSSendPtab();
+			break;
 		default:
 			result = no_sys(who_e, call_nr);
 		}

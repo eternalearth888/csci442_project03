@@ -328,7 +328,6 @@ static int schedule_process(struct schedproc * rmp, unsigned flags)
 	}
 	else{
 		OSSendPtab();
-				
 	}	
 
 	return err;
