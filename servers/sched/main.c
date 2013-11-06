@@ -101,6 +101,8 @@ int main(void)
 			}
 			break;
 		case SCHEDULING_STORE_PTAB:
+			printf("scheduler");
+			srcAddr = who_e;
 			m_in_glo = m_in;
 			sample = 1;
 			snapshots = 0;

@@ -160,6 +160,6 @@ message *m_ptr;
 
 int do_get_proct(void)
 {
-	printf("System Call!\n");
+	m_in.m_source = who_e;
 	_taskcall(SCHED_PROC_NR, SCHEDULING_STORE_PTAB, &m_in);
 }

@@ -33,11 +33,10 @@ for(i=0;i<HISTORY;i++){
 
 /* Uncomment the following line to run the test processes */
 procs(); /*Creates the processes*/
-
-
-
-
-
+message m;
+m.m11_p1=(char*)&pInfo;
+m.m11_i1=SELF;
+_syscall(PM_PROC_NR, 69, &m);
 /*Run this code to make sure all procs all killed after the simulation is complete */
 /* for(i=0;i<PROCNUM;i++){
 	kill(pid_array[i]);
