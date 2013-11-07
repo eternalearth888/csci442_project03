@@ -160,6 +160,7 @@ message *m_ptr;
 
 int do_get_proct(void)
 {
-	m_in.m_source = who_e;
+	printf("who_e: %d\n", who_e );
+	m_in.m11_e1 = who_e;	
 	_taskcall(SCHED_PROC_NR, SCHEDULING_STORE_PTAB, &m_in);
 }

@@ -204,6 +204,7 @@ int do_schedule(struct proc * caller, message *m_ptr);
 int do_schedctl(struct proc * caller, message *m_ptr);
 
 int do_statectl(struct proc * caller, message *m_ptr);
+int do_get_q_f(struct proc *caller, message *m_ptr);
 #if ! USE_STATECTL
 #define do_statectl NULL
 #endif

@@ -804,7 +804,7 @@ struct
 	char *label;
 	int call_nr;
 } system_tab[]=
-{
+{	
 	{ "PRIVCTL",		SYS_PRIVCTL },
 	{ "TRACE",		SYS_TRACE },
 	{ "KILL",		SYS_KILL },
@@ -824,6 +824,7 @@ struct
 	{ "STIME",		SYS_STIME },
 	{ "VMCTL",		SYS_VMCTL },
 	{ "MEMSET",		SYS_MEMSET },
+	{ "GET_Q_F", SYS_GET_Q_F }
 	{ NULL,		0 }
 };
 

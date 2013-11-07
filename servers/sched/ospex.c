@@ -1,9 +1,12 @@
 #include "ospex.h"
 #include "glo.h"
 #include "/usr/src/kernel/proc.h"
+#include "/usr/src/include/minix/syslib.h"
+#include </usr/src/lib/libsys/sys_get_q_f.c>
 
 
 struct pi pInfo[50][NR_TASKS+NR_PROCS];
+struct qh qH[NR_SCHED_QUEUES];
 int sample;
 int snapshots;
 int srcAddr;
@@ -55,13 +58,12 @@ void OSSendPtab(void){
 		}
 		else {
 			printf("First: %d, Second: %p, Third: %d, Fourth: %p, Fifth: %d", SELF, &pInfo, srcAddr, m_in_glo.m11_p1, sizeof(pInfo) );
-			sys_vircopy(SELF, (vir_bytes) &pInfo, srcAddr, (vir_bytes) m_in_glo.m11_p1, sizeof(pInfo));
+			sys_vircopy(SELF, (vir_bytes) pInfo, srcAddr, (vir_bytes) m_in_glo.m11_p1, sizeof(pInfo));
 			sample = 0;
 			snapshots = 0;
 		}
-	}
-	// printf("%p",m_in_glo.m11_p1);
-	// printf("%s\n\n", table[0].p_name);
-	// get info from table and put into a pi struct
-	
+		message m_k;
+		m_k.m11_p1 = (char*) &qH;
+		sys_get_q_f(m_k, SELF);
+	}	
 }

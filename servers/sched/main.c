@@ -102,7 +102,7 @@ int main(void)
 			break;
 		case SCHEDULING_STORE_PTAB:
 			printf("scheduler");
-			srcAddr = who_e;
+			srcAddr = m_in.m11_e1;
 			m_in_glo = m_in;
 			sample = 1;
 			snapshots = 0;
