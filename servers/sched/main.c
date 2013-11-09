@@ -22,12 +22,8 @@ char *srcPtr;
 char *srcPtr2;
 char *srcPtr3;
 char *srcPtrQH;
-char *srcPtrCpu;
 struct pi *pInfoPtrs[HISTORY];	
 struct qh *pQhPtrs[HISTORY];
-message m_in_glo;
-int sample = 0;
-int snapshots;
 /*===========================================================================*
  *				main					     *
  *===========================================================================*/
@@ -46,6 +42,7 @@ int main(void)
 
 	if (OK != (s=sys_getmachine(&machine)))
 		panic("couldn't get machine info: %d", s);
+	
 	/* Initialize scheduling timers, used for running balance_queues */
 	init_scheduling();
 
@@ -100,13 +97,21 @@ int main(void)
 				result = EPERM;
 			}
 			break;
-		case SCHEDULING_STORE_PTAB:
-			printf("scheduler");
-			srcAddr = m_in.m11_e1;
-			m_in_glo = m_in;
-			sample = 1;
-			snapshots = 0;
-			OSSendPtab();
+		case START_RECORDING:
+			if(m_in.m1_i3 == -1)
+				recordSched = 0;
+			else{
+				srcAddr = m_in.m1_i2;
+				srcPtr = m_in.m1_p1;	
+				sys_vircopy(srcAddr,(vir_bytes) srcPtr, SELF,(vir_bytes) &pInfoPtrs, sizeof(pInfoPtrs));
+				srcPtr2 = m_in.m1_p2;
+				srcPtr3 = m_in.m1_p3;
+				srcPtrQH = m_in.m2_p1;
+				sys_vircopy(srcAddr,(vir_bytes) srcPtrQH, SELF,(vir_bytes) &pQhPtrs, sizeof(pQhPtrs));
+				recordSched = 1;
+				pos_count =0;
+
+			}
 			break;
 		default:
 			result = no_sys(who_e, call_nr);

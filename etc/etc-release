@@ -3,7 +3,7 @@ NetBSD 3.2.1/i386
 Copyright (c) 2012, Vrije Universiteit, Amsterdam, The Netherlands
 
 Build settings:
-          Build date   Thu Oct 31 22:27:43 UTC 2013
+          Build date   Sat Nov  9 02:22:31 UTC 2013
             Built by   root@
 
            BSDOBJDIR = '/usr/obj'

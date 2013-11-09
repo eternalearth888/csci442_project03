@@ -74,7 +74,6 @@ SRCS+=  \
 	sys_vsafecopy.c \
 	sys_vtimer.c \
 	sys_vumap.c \
-	sys_get_q_f.c \
 	taskcall.c \
 	tickdelay.c \
 	timers.c \
@@ -87,7 +86,9 @@ SRCS+=  \
 	vm_umap.c \
 	vm_yield_get_block.c \
 	vm_procctl.c \
-	vprintf.c 
+	vprintf.c \
+	sys_cpuvar.c \
+	sys_qptab.c
 
 .if ${MKPCI} != "no"
 SRCS+=	pci_attr_r16.c \

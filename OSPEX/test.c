@@ -1,6 +1,6 @@
-#include "student.h"
+#include "procs.h"
 
 void main(void){
 
-studentInput();
+procs();
 }

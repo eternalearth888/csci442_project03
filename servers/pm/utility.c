@@ -154,13 +154,17 @@ message *m_ptr;
   rmp->mp_flags |= VFS_CALL;
 }
 
-/*============================================================================*
- *				get_proct				*
- *============================================================================*/
-
-int do_get_proct(void)
+/*===========================================================================*
+ *				do_start_record			 	     *
+ *===========================================================================*/
+int do_start_record(void)
 {
-	printf("who_e: %d\n", who_e );
-	m_in.m11_e1 = who_e;	
-	_taskcall(SCHED_PROC_NR, SCHEDULING_STORE_PTAB, &m_in);
+message m;
+m.m1_i2 = m_in.m_source;
+m.m1_i3 = m_in.m1_i3;
+m.m1_p1 = m_in.m1_p1;
+m.m1_p2 = m_in.m1_p2;
+m.m2_p1 = m_in.m2_p1;
+int error = _taskcall(SCHED_PROC_NR,START_RECORDING,&m);
+return(0);
 }

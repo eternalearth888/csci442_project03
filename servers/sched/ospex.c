@@ -1,69 +1,63 @@
 #include "ospex.h"
 #include "glo.h"
-#include "/usr/src/kernel/proc.h"
-#include "/usr/src/include/minix/syslib.h"
-#include </usr/src/lib/libsys/sys_get_q_f.c>
-
-
-struct pi pInfo[50][NR_TASKS+NR_PROCS];
-struct qh qH[NR_SCHED_QUEUES];
-int sample;
-int snapshots;
-int srcAddr;
 
 void OSSendPtab(void){
-	// printf("OUR TASK CALL!\n");
-	struct proc table[NR_TASKS+NR_PROCS];
+	int i;
+	if(recordSched == 1){
+				struct pi sendPi[NR_PROCS + NR_TASKS];
+				/*Use the following array to recover the next ready processes before we lose the addresses*/
+				struct proc nextReady[NR_PROCS + NR_TASKS];
+				struct proc tmpPtab[NR_PROCS +NR_TASKS];
+				struct proc queuehds[NR_SCHED_QUEUES];
 
-	if(sample) {
-		if(snapshots < 50) {	
-			// table = malloc(sizeof(proct)*(NR_TASKS+NR_PROCS));
-			//for 50 times
-			sys_getproctab(&table);
+			if(pos_count < HISTORY ){
 
-			for(int i=0; i < NR_TASKS+NR_PROCS; i++) {
-				if(table[i].p_name) {
-					strcpy(pInfo[snapshots][i].p_name, table[i].p_name);
-					pInfo[snapshots][i].p_endpoint = table[i].p_endpoint;
-					pInfo[snapshots][i].p_priority = table[i].p_priority;
-					pInfo[snapshots][i].p_cpu_time_left = table[i].p_cpu_time_left;
-					pInfo[snapshots][i].p_rts_flags = table[i].p_rts_flags;
-					// pInfo[snapshots][i].queue_head = table[i].queue_head;
-					if(table[i].p_nextready) {
-						pInfo[snapshots][i].p_nextready_endpoint = table[i].p_endpoint;
-						strcpy(pInfo[snapshots][i].p_nextready, table[i].p_name);
+				/*Get the current process table */
+				sys_getproctab((struct proc *) &tmpPtab);
+			  	sys_cpuvar((char *) &queuehds,SELF);	
+
+				/* Handle the heads of each queue */
+				struct qh qh_send[NR_SCHED_QUEUES];
+
+				for(i=0;i<NR_SCHED_QUEUES;i++){
+					if(queuehds[i].p_priority!=-1){
+						strcpy(qh_send[i].p_name,queuehds[i].p_name);
+						qh_send[i].p_endpoint = queuehds[i].p_endpoint;
 					}
-					else {
-						strcpy(pInfo[snapshots][i].p_nextready, NOPROC);
-						pInfo[snapshots][i].p_nextready_endpoint = -1;
+					else{
+						qh_send[i].p_endpoint = -1;
 					}
-
-					pInfo[snapshots][i].p_times.enter_queue = table[i].p_accounting.enter_queue;
-					pInfo[snapshots][i].p_times.time_in_queue = table[i].p_accounting.time_in_queue;
-					pInfo[snapshots][i].p_times.dequeues = table[i].p_accounting.dequeues;
-					pInfo[snapshots][i].p_times.ipc_sync = table[i].p_accounting.ipc_sync;
-					pInfo[snapshots][i].p_times.ipc_async = table[i].p_accounting.ipc_async;
-					pInfo[snapshots][i].p_times.preempted = table[i].p_accounting.preempted;
-
-					pInfo[snapshots][i].p_user_time = table[i].p_user_time;
-					pInfo[snapshots][i].p_sys_time = table[i].p_sys_time;
-					pInfo[snapshots][i].p_cycles = table[i].p_cycles;
 				}
-				else {
-					printf("There is a null table value\n");
-				}
+
+				for(i=0;i<(NR_PROCS+NR_TASKS);i++){
+					strcpy(sendPi[i].p_name,tmpPtab[i].p_name);
+					sendPi[i].p_endpoint = tmpPtab[i].p_endpoint;
+					sendPi[i].p_priority = tmpPtab[i].p_priority;
+					sendPi[i].p_cpu_time_left = tmpPtab[i].p_cpu_time_left;
+					sendPi[i].p_rts_flags = tmpPtab[i].p_rts_flags;
+						if(tmpPtab[i].p_nextready){
+							sys_vircopy(SYSTEM,(vir_bytes) tmpPtab[i].p_nextready, SELF,(vir_bytes) &(nextReady[i]),sizeof(struct proc));
+							strcpy(sendPi[i].p_nextready,nextReady[i].p_name);
+							sendPi[i].p_nextready_endpoint = nextReady[i].p_endpoint;
+						}
+						else{
+							strcpy(sendPi[i].p_nextready, NOPROC);
+							sendPi[i].p_nextready_endpoint = -1;
+						}
+					/*Copy the accounting structure. Using CPU cycles instead of times, because CPU speeds will vary*/
+					sendPi[i].p_times.enter_queue = tmpPtab[i].p_accounting.enter_queue;
+					sendPi[i].p_times.time_in_queue = tmpPtab[i].p_accounting.time_in_queue;
+					sendPi[i].p_times.dequeues = tmpPtab[i].p_accounting.dequeues;
+					sendPi[i].p_times.ipc_sync = tmpPtab[i].p_accounting.ipc_sync;
+					sendPi[i].p_times.ipc_async = tmpPtab[i].p_accounting.ipc_async;
+					sendPi[i].p_times.preempted = tmpPtab[i].p_accounting.preempted;
+				}	
+				
+				sys_vircopy(SELF,(vir_bytes) &sendPi, srcAddr,(vir_bytes) pInfoPtrs[pos_count],sizeof(sendPi));
+				sys_vircopy(SELF,(vir_bytes) &qh_send, srcAddr,(vir_bytes) pQhPtrs[pos_count],sizeof(qh_send));
+				int piReady = pos_count;
+				sys_vircopy(SELF,(vir_bytes) &piReady, srcAddr, (vir_bytes) srcPtr2, sizeof(piReady));
+				pos_count++; /* Ensure the proc history buffer does not overflow*/
 			}
-			snapshots++;
-			// printf("%d; %p", m_in_glo.m11_i1, m_in_glo.m11_p1);
 		}
-		else {
-			printf("First: %d, Second: %p, Third: %d, Fourth: %p, Fifth: %d", SELF, &pInfo, srcAddr, m_in_glo.m11_p1, sizeof(pInfo) );
-			sys_vircopy(SELF, (vir_bytes) pInfo, srcAddr, (vir_bytes) m_in_glo.m11_p1, sizeof(pInfo));
-			sample = 0;
-			snapshots = 0;
-		}
-		message m_k;
-		m_k.m11_p1 = (char*) &qH;
-		sys_get_q_f(m_k, SELF);
-	}	
 }
