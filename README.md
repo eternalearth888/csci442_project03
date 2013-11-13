@@ -4,19 +4,19 @@
 - Maria Deslis @eternalearth888
 	* HOURS:
 		+ Intermediate One: 25.5
-		+ Intermediate Two: 2
+		+ Intermediate Two: 3
 - Mykala Miller @mymiller
 	* HOURS:
 		+ Intermediate One: 25.5
-		+ Intermediate Two: 6
+		+ Intermediate Two: 8 
 - Austin Thompson @authompson
 	* HOURS:
 		+ Intermediate One: 25.5
-		+ Intermediate Two: 6
+		+ Intermediate Two: 8
 - Joseph Cirone @jcirone
 	* HOURS:
 		+ Intermediate One: 25.5
-		+ Intermediate Two: 4
+		+ Intermediate Two: 6
 
 ###Unusual/Interesting Features
 N/A 
