@@ -28,12 +28,13 @@
 - First intermediate task took WAY too long; information & tutorials were insufficient
 
 ###How we modified Minix to retrieve a copy of the process table and how you implemented SPN scheduling
-  - *PROCESS TABLE:*
+  -*PROCESS TABLE:*
  	1. Implement a system call to the PM server
  	2. Implement a task call to the sched server
  	3. Call sys_getproctab()
  	4. Copy the returned process table to the user process with sys_vircopy() - This is where we stopped and turned in our work "as is"
- - *SPN SCHEDULING:*
+
+ -*SPN SCHEDULING:*
  	1. Get endpoints, other process information from proc1,...,proc10, and place it in the global sjf-struct array
  	2. Calculate burst time for the process that was preempted (if proc1,...,proc10)
  	3. Find which process has the shortest burst time
