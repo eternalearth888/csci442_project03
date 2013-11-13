@@ -6,6 +6,7 @@ struct sjf{
 	char p_name[PROC_NAME_LEN];
 	endpoint_t p_endpoint;
 	unsigned long predBurst;
+	u64_t ticks;
 	};
 #define PROCNUM 10 
 #define ALPHA 0.5
@@ -21,3 +22,4 @@ extern struct pi *pInfoPtrs[HISTORY];
 extern struct qh *pQhPtrs[HISTORY];
 extern int debug_trigger;
 extern struct sjf sjf[PROCNUM];
+extern char* proc_name[PROCNUM];
