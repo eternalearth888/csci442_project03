@@ -1,19 +1,19 @@
 #**csci442 | fall 2013 | camp | project03**
 ##**TEAM**
 
-- Maria Deslis @eternalearth888
+- *Maria Deslis @eternalearth888*
 	* HOURS:
 		+ Intermediate One: 25.5
 		+ Intermediate Two: 3
-- Mykala Miller @mymiller
+- *Mykala Miller @mymiller*
 	* HOURS:
 		+ Intermediate One: 25.5
 		+ Intermediate Two: 8 
-- Austin Thompson @authompson
+- *Austin Thompson @authompson*
 	* HOURS:
 		+ Intermediate One: 25.5
 		+ Intermediate Two: 8
-- Joseph Cirone @jcirone
+- *Joseph Cirone @jcirone*
 	* HOURS:
 		+ Intermediate One: 25.5
 		+ Intermediate Two: 6
