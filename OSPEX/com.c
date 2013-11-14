@@ -2,7 +2,6 @@
 #include <minix/u64.h>
 #include "glo.h"
 #include "procs.h"
-#include "procs.c"
 
 struct pi *pInfoPtrs[HISTORY];
 /* qh is queue heads and will hold the process at the top of each priority queue*/
@@ -10,14 +9,12 @@ struct qh *pQhPtrs[HISTORY];
 struct pi pInfo[HISTORY][ALL_PROCS];
 struct qh pQh[HISTORY][NR_SCHED_QUEUES];
 
-char * print_string[30];
-
 /*Recursive function decleration */
 void printQ (struct pi *procPtr,
 	     int endpoint,
 	     FILE *fp);
 
-int main(void){
+int startsim(void){
 
 message m;
 int i,j=0,piReady = -1;
@@ -43,14 +40,13 @@ m.m1_p2 = (char *) &piReady;
 m.m1_i2 = SELF;
 m.m1_i3 = HISTORY;
 m.m2_p1 = (char *) &pQhPtrs;
-m.m2_i1 = (char *) &print_string;
 
 int error = _syscall(PM_PROC_NR,STARTRECORD,&m);
 procs();
 for(j;j<HISTORY;j++){
 		while(piReady < j){
 		}
-		// printf("Simulation is %d%% complete\n",(j*2)+2);
+		printf("Simulation is %d%% complete\n",(j*2)+2);
 		fprintf(fp,"Proc Table %d\n\n",j);
 		fprintf(fp,"Queue heads: ");
 		for(i=0;i<NR_SCHED_QUEUES;i++){

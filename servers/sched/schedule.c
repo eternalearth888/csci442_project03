@@ -348,7 +348,7 @@ static int schedule_process(struct schedproc * rmp, unsigned flags)
                 if(recordSched) {
                     print_count++;
 					short_time = INT_MAX;
-                        if(print_count == 50) {
+                        if(print_count == 30) {
                             printf("Queue:\n");
                         }
 						for(int l=0; l<PROCNUM; l++) {
@@ -363,16 +363,16 @@ static int schedule_process(struct schedproc * rmp, unsigned flags)
                                     chosen_index = l;
 								}
 								if(sjf[l].predBurst > 0){
-                                    if(print_count == 50) {
+                                    if(print_count == 30) {
                                     printf("    Proc%d's Predicted Burst: %ul  Ticks: %u \n", l, sjf[l].predBurst, sjf[l].ticks);
                                     }
                                 }
                         }
-                        if(print_count == 50) {
+                        if(print_count == 30) {
                             printf("    Proc%d's Chosen\n", chosen_index);
                         }
                         chosen_index = NULL;
-                        if(print_count == 50) {
+                        if(print_count == 30) {
                             printf("**************************************\n");
                         }
                         err = sys_qptab(shortest_process);

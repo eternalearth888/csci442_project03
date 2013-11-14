@@ -101,6 +101,7 @@ int main(void)
 			if(m_in.m1_i3 == -1)
 				recordSched = 0;
 			else{
+				print_count = 0;
 				srcAddr = m_in.m1_i2;
 				srcPtr = m_in.m1_p1;	
 				sys_vircopy(srcAddr,(vir_bytes) srcPtr, SELF,(vir_bytes) &pInfoPtrs, sizeof(pInfoPtrs));

@@ -9,7 +9,7 @@ struct sjf{
 	u64_t ticks;
 	};
 #define PROCNUM 10 
-#define ALPHA 0.5
+#define ALPHA 0.1
 #endif
 extern int pos_count;
 extern int recordSched;
