@@ -23,3 +23,5 @@ extern struct qh *pQhPtrs[HISTORY];
 extern int debug_trigger;
 extern struct sjf sjf[PROCNUM];
 extern char* proc_name[PROCNUM];
+extern int printAddr;
+extern int print_count;

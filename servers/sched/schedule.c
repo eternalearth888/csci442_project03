@@ -16,6 +16,7 @@
 #include "kernel/cpulocals.h"
 #include "ospex.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 static timer_t sched_timer;
 static unsigned balance_timeout;
@@ -58,6 +59,7 @@ struct kinfo sysInfo;
 int nr_procs,i;
 struct proc tempProc[NR_TASKS+NR_PROCS];
 struct sjf sjf[PROCNUM];
+int print_count = 0;
 char* proc_name[PROCNUM] = {"proc1", "proc2", "proc3", "proc4", "proc5", "proc6", "proc7", "proc8", "proc9", "proc10"};
 
 int compare_burst_times(const int first,const int second);
@@ -342,8 +344,13 @@ static int schedule_process(struct schedproc * rmp, unsigned flags)
         }
         else{
                 OSSendPtab();
+                int chosen_index;
                 if(recordSched) {
+                    print_count++;
 					short_time = INT_MAX;
+                        if(print_count == 50) {
+                            printf("Queue:\n");
+                        }
 						for(int l=0; l<PROCNUM; l++) {
                                 if (sjf[l].p_endpoint == rmp->endpoint) {
                                         //Recalculate Burst
@@ -353,8 +360,20 @@ static int schedule_process(struct schedproc * rmp, unsigned flags)
 								if (sjf[l].predBurst < short_time) {
 									short_time = sjf[l].predBurst;
 									shortest_process = sjf[l].p_endpoint;
+                                    chosen_index = l;
 								}
-								// printf(sjf[l].predBurst);
+								if(sjf[l].predBurst > 0){
+                                    if(print_count == 50) {
+                                    printf("    Proc%d's Predicted Burst: %ul  Ticks: %u \n", l, sjf[l].predBurst, sjf[l].ticks);
+                                    }
+                                }
+                        }
+                        if(print_count == 50) {
+                            printf("    Proc%d's Chosen\n", chosen_index);
+                        }
+                        chosen_index = NULL;
+                        if(print_count == 50) {
+                            printf("**************************************\n");
                         }
                         err = sys_qptab(shortest_process);
                 }

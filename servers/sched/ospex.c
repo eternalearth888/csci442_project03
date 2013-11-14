@@ -34,10 +34,15 @@ void OSSendPtab(void){
                                         sendPi[i].p_endpoint = tmpPtab[i].p_endpoint;
                                         for (int l=0; l<PROCNUM; l++) {
                                                 if (0 == strcmp(tmpPtab[i].p_name, proc_name[l])) {
-                                                        strcpy(sjf[l].p_name,tmpPtab[i].p_name);
-                                                        sjf[l].p_endpoint = tmpPtab[i].p_endpoint;
-                                                        sjf[l].ticks = tmpPtab[i].p_cycles;
+                                                    strcpy(sjf[l].p_name,tmpPtab[i].p_name);
+                                                    sjf[l].p_endpoint = tmpPtab[i].p_endpoint;
+                                                    sjf[l].ticks = tmpPtab[i].p_cycles;
+                                                    if(!proc_is_runnable(&tmpPtab[i])) {
+                                                            sjf[l].predBurst = INT_MAX;
+                                                            sjf[l].ticks = INT_MAX;
+                                                    }
                                                 }
+                
                                         }
                                         sendPi[i].p_priority = tmpPtab[i].p_priority;
                                         sendPi[i].p_cpu_time_left = tmpPtab[i].p_cpu_time_left;
