@@ -102,6 +102,10 @@ int main(void)
 				recordSched = 0;
 			else{
 				print_count = 0;
+				// Reset structure containing previous predicted bursts from the last run
+				for(int i = 0; i < PROCNUM; i++){
+					sjf[i].predBurst = 1;
+				}
 				srcAddr = m_in.m1_i2;
 				srcPtr = m_in.m1_p1;	
 				sys_vircopy(srcAddr,(vir_bytes) srcPtr, SELF,(vir_bytes) &pInfoPtrs, sizeof(pInfoPtrs));

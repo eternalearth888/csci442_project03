@@ -315,10 +315,11 @@ int do_nice(message *m_ptr)
 static int schedule_process(struct schedproc * rmp, unsigned flags)
 {
 
-        int err, short_time;
-		endpoint_t shortest_process;
+        int err;
+        unsigned long short_time;
+        endpoint_t shortest_process = 0;
         int new_prio, new_quantum, new_cpu;
-        double last_time;
+        unsigned long last_time;
         
         pick_cpu(rmp);
 
@@ -348,31 +349,42 @@ static int schedule_process(struct schedproc * rmp, unsigned flags)
                 if(recordSched) {
                     print_count++;
 					short_time = INT_MAX;
-                        if(print_count == 30) {
+                        if(print_count == 20) {
                             printf("Queue:\n");
                         }
 						for(int l=0; l<PROCNUM; l++) {
-                                if (sjf[l].p_endpoint == rmp->endpoint) {
+                                if ((sjf[l].p_endpoint == rmp->endpoint) && !sjf[l].is_blocked) {
                                         //Recalculate Burst
                                         last_time = sjf[l].ticks;
                                         sjf[l].predBurst = ALPHA*last_time + (1-ALPHA)*sjf[l].predBurst;
                                 }
-								if (sjf[l].predBurst < short_time) {
+								if ((sjf[l].predBurst < short_time) && !sjf[l].is_blocked && sjf[l].p_endpoint) {
 									short_time = sjf[l].predBurst;
 									shortest_process = sjf[l].p_endpoint;
                                     chosen_index = l;
 								}
-								if(sjf[l].predBurst > 0){
-                                    if(print_count == 30) {
-                                    printf("    Proc%d's Predicted Burst: %ul  Ticks: %u \n", l, sjf[l].predBurst, sjf[l].ticks);
+                                if(print_count == 20) {
+                                    printf("    Proc%d's Predicted Burst: %ul  Blocked: ", l+1, sjf[l].predBurst);
+                                    if(sjf[l].is_blocked) {
+                                        printf("Yes");
+                                    } else {
+                                        printf("No");
+                                    }
+                                    printf(" Exited: ");
+                                    if(sjf[l].p_endpoint) {
+                                        printf("No\n");                                        
+                                    }
+                                    else {
+                                        printf("Yes\n");
+
                                     }
                                 }
                         }
-                        if(print_count == 30) {
-                            printf("    Proc%d's Chosen\n", chosen_index);
+                        if(print_count == 20) {
+                            printf("    Proc%d's Chosen\n", chosen_index+1);
                         }
                         chosen_index = NULL;
-                        if(print_count == 30) {
+                        if(print_count == 20) {
                             printf("**************************************\n");
                         }
                         err = sys_qptab(shortest_process);

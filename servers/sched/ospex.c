@@ -29,6 +29,7 @@ void OSSendPtab(void){
                                         }
                                 }
 
+
                                 for(i=0;i<(NR_PROCS+NR_TASKS);i++){
                                         strcpy(sendPi[i].p_name,tmpPtab[i].p_name);
                                         sendPi[i].p_endpoint = tmpPtab[i].p_endpoint;
@@ -38,8 +39,11 @@ void OSSendPtab(void){
                                                     sjf[l].p_endpoint = tmpPtab[i].p_endpoint;
                                                     sjf[l].ticks = tmpPtab[i].p_cycles;
                                                     if(!proc_is_runnable(&tmpPtab[i])) {
-                                                            sjf[l].predBurst = INT_MAX;
-                                                            sjf[l].ticks = INT_MAX;
+                                                        sjf[l].is_blocked = 1;
+                                                            // sjf[l].predBurst = INT_MAX;
+                                                            // sjf[l].ticks = INT_MAX;
+                                                    } else {
+                                                        sjf[l].is_blocked = 0;
                                                     }
                                                 }
                 

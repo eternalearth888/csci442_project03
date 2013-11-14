@@ -7,6 +7,7 @@ struct sjf{
 	endpoint_t p_endpoint;
 	unsigned long predBurst;
 	u64_t ticks;
+	int is_blocked;
 	};
 #define PROCNUM 10 
 #define ALPHA 0.1
